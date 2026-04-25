@@ -54,3 +54,38 @@ export const mockTopProductos = [
   { nombre: 'Producto B', unidades_vendidas: 120 },
   { nombre: 'Producto C', unidades_vendidas: 98 }
 ]
+
+// Mock login - Simula autenticación con MS3
+export const doMockLogin = (email) => {
+  return {
+    success: true,
+    user: {
+      id: 1,
+      nombre: email.split('@')[0] || 'Usuario',
+      email: email,
+      telefono: '+51 942 234 5678',
+      direccion: {
+        calle: 'Calle Medrano SIlva',
+        ciudad: 'Lima',
+        pais: 'Perú'
+      },
+      token: 'mock-jwt-token-123456'
+    }
+  };
+};
+
+export const doMockRegister = (nombre, email, password) => {
+  return {
+    success: true,
+    user: {
+      id: Date.now(),
+      nombre: nombre,
+      email: email,
+      direccion: {
+        calle: '',
+        ciudad: '',
+        pais: ''
+      }
+    }
+  };
+};
