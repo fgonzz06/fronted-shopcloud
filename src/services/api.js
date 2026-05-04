@@ -14,24 +14,47 @@ const USE_MOCK = true;
 
 
 // Productos ms1
-export const getProducts = async (page = 1, limit = 20) => {
+export const getProducts = async (skip = 0, limit = 20) => {
   if (USE_MOCK) return mockProducts;
-  const res = await api.get(`/products?page=${page}&limit=${limit}`);
-  return res.data;
+  
+
+  try {
+    const res = await api.get('/productos/', {
+      params: {skip, limit}
+    });
+    return res.data;
+  }catch (error){
+    console.error('Error fetching products: ', error);
+    return [];
+  }
 };
+
 
 export const getProductById = async (id) => {
   if (USE_MOCK) return mockProductDetail(id);
-  const res = await api.get(`/products/${id}`);
-  return res.data;
+  
+  try {
+    const res = await api.get(`/productos/${id}`);
+    return res.data;
+  } catch (error) {
+    console.error(`Error fetching product ${id}:`, error);
+    return null;
+  }
 };
 
-export const getCategories = async () => {
+export const getCategories = async (skip = 0, limit = 100) => {
   if (USE_MOCK) return mockCategories;
-  const res = await api.get('/categories');
-  return res.data;
+  
+  try {
+    const res = await api.get(`/categorias/`, {
+      params: { skip, limit }
+    });
+    return res.data;
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    return [];
+  }
 };
-
 
 // Pedidos ms2
 

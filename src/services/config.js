@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-//url del api gateway
-const API_BASE = import.meta.env.VITE_API_GATEWAY_URL || 'http://localhost:8000';
+
+export const USE_MOCK = false;
+//  Url Ms1 
+export const API_BASE = 'http://localhost:8001'
 
 export const api = axios.create({
   baseURL: API_BASE,
