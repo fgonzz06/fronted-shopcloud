@@ -48,29 +48,68 @@ export const getCategories = async (skip = 0, limit = 100) => {
 };
 
 // ========== MS2 - Pedidos ==========
+
+// Listar pedidos de un usuario - usa /mis-pedidos o /usuario/{id}
 export const getPedidos = async (usuarioId) => {
   if (USE_MOCK) return mockPedidos;
-  const res = await apiMs2.get(`/pedidos?usuario_id=${usuarioId}`);
-  return res.data;
+  
+  try {
+    // Opción 1: usar /mis-pedidos (usa el token automáticamente)
+    const res = await apiMs2.get('/pedidos/mis-pedidos');
+    return res.data;
+  } catch (error) {
+    console.error('Error fetching pedidos:', error);
+    return [];
+  }
 };
 
+// Obtener detalle de un pedido
 export const getPedidoById = async (id) => {
-  if (USE_MOCK) return mockPedidos.find(p => p.id === id);
-  const res = await apiMs2.get(`/pedidos/${id}`);
-  return res.data;
+  if (USE_MOCK) return mockPedidos.find(p => p.id === parseInt(id));
+  
+  try {
+    const res = await apiMs2.get(`/pedidos/${id}`);
+    return res.data;
+  } catch (error) {
+    console.error(`Error fetching pedido ${id}:`, error);
+    return null;
+  }
 };
 
+// Crear nuevo pedido
 export const createPedido = async (pedidoData) => {
   if (USE_MOCK) return { success: true, id: Date.now(), mensaje: 'Pedido creado (mock)' };
-  const res = await apiMs2.post('/pedidos', pedidoData);
-  return res.data;
+  
+  try {
+    // El formato esperado por el backend
+    const payload = {
+      usuarioId: pedidoData.usuarioId,
+      items: pedidoData.items.map(item => ({
+        productoId: item.productoId,
+        cantidad: item.cantidad
+      }))
+    };
+    const res = await apiMs2.post('/pedidos', payload);
+    return res.data;
+  } catch (error) {
+    console.error('Error creating pedido:', error);
+    throw error;
+  }
 };
 
+// Actualizar estado (opcional, para admin)
 export const updatePedidoEstado = async (id, estado) => {
   if (USE_MOCK) return { success: true, estado };
-  const res = await apiMs2.put(`/pedidos/${id}/estado`, { estado });
-  return res.data;
+  
+  try {
+    const res = await apiMs2.put(`/pedidos/${id}/estado`, { estado });
+    return res.data;
+  } catch (error) {
+    console.error(`Error updating pedido ${id}:`, error);
+    return null;
+  }
 };
+
 
 // ========== MS3 - Usuarios ==========
 export const getUsuarios = async () => {

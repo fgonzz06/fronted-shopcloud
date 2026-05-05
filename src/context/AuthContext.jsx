@@ -1,5 +1,6 @@
-import { createContext, useState, useContext } from 'react';
-import { mockUsuario, doMockLogin } from '../services/mockData';
+import { createContext, useState, useContext, useEffect } from 'react';
+import { apiMs3 } from '../services/config';
+import { doMockLogin } from '../services/mockData';
 
 const AuthContext = createContext();
 
@@ -8,23 +9,32 @@ export const useAuth = () => useContext(AuthContext);
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState(localStorage.getItem('token') || null);
 
   const login = async (email, password) => {
     setLoading(true);
     try {
-      // Simula llamada a MS3 - Usuarios
-      // Cuando tengas API real: const res = await api.post('/usuarios/login', { email, password })
+      // Si el backend MS3 está disponible
+      const res = await apiMs3.post('/auth/login', { email, password });
       
-      // Por ahora, mock: cualquier email/password funciona
-      if (email && password) {
-        const mockResponse = doMockLogin(email);
-        setUser(mockResponse.user);
-        localStorage.setItem('user', JSON.stringify(mockResponse.user));
+      if (res.data.token) {
+        localStorage.setItem('token', res.data.token);
+        setToken(res.data.token);
+        setUser(res.data.user);
         return { success: true };
-      } else {
-        return { success: false, error: 'Credenciales inválidas' };
       }
+      return { success: false, error: 'No se recibió token' };
     } catch (error) {
+      // Si el backend no está disponible, usar mock
+      console.warn('Usando mock login - backend no disponible');
+      const mockRes = doMockLogin(email);
+      if (mockRes.success) {
+        localStorage.setItem('token', mockRes.user.token);
+        localStorage.setItem('user', JSON.stringify(mockRes.user));
+        setToken(mockRes.user.token);
+        setUser(mockRes.user);
+        return { success: true };
+      }
       return { success: false, error: error.message };
     } finally {
       setLoading(false);
@@ -33,21 +43,28 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     setUser(null);
+    setToken(null);
+    localStorage.removeItem('token');
     localStorage.removeItem('user');
   };
 
   const checkAuth = () => {
+    const storedToken = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
-    if (storedUser) {
+    
+    if (storedToken && storedUser) {
+      setToken(storedToken);
       setUser(JSON.parse(storedUser));
     }
   };
 
   // Verificar si hay sesión al cargar
-  useState(() => { checkAuth(); }, []);
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, token, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
