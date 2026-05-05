@@ -112,28 +112,49 @@ export const updatePedidoEstado = async (id, estado) => {
 
 
 // ========== MS3 - Usuarios ==========
-export const getUsuarios = async () => {
-  if (USE_MOCK) return [mockUsuario];
-  const res = await apiMs3.get('/usuarios');
-  return res.data;
-};
 
 export const getUsuario = async (id) => {
   if (USE_MOCK) return mockUsuario;
-  const res = await apiMs3.get(`/usuarios/${id}`);
-  return res.data;
+  try {
+    const res = await apiMs3.get(`/api/v1/usuarios/${id}`);
+    return res.data.data;
+  } catch (error) {
+    console.error(`Error fetching usuario ${id}:`, error);
+    return null;
+  }
 };
 
-export const createUsuario = async (usuarioData) => {
-  if (USE_MOCK) return { success: true, id: 'mock_id_123' };
-  const res = await apiMs3.post('/usuarios', usuarioData);
-  return res.data;
+export const updateUsuarioDireccion = async (id, direccion) => {
+  if (USE_MOCK) return { success: true, mensaje: 'Dirección actualizada (mock)' };
+  try {
+    const res = await apiMs3.put(`/api/v1/usuarios/${id}/direccion`, { direccion });
+    return res.data.data;
+  } catch (error) {
+    console.error(`Error updating direccion for ${id}:`, error);
+    return null;
+  }
 };
 
-export const updateUsuario = async (id, usuarioData) => {
-  if (USE_MOCK) return { success: true, mensaje: 'Usuario actualizado (mock)' };
-  const res = await apiMs3.put(`/usuarios/${id}`, usuarioData);
-  return res.data;
+export const signup = async (userData) => {
+  if (USE_MOCK) return { success: true, token: 'mock-token' };
+  try {
+    const res = await apiMs3.post('/api/v1/usuarios/signup', userData);
+    return res.data;
+  } catch (error) {
+    console.error('Error signing up:', error);
+    throw error;
+  }
+};
+
+export const loginUsuario = async (email, password) => {
+  if (USE_MOCK) return { success: true, token: 'mock-token' };
+  try {
+    const res = await apiMs3.post('/api/v1/usuarios/login', { email, password });
+    return res.data;
+  } catch (error) {
+    console.error('Error logging in:', error);
+    throw error;
+  }
 };
 
 // ========== MS4 - Historial ==========
