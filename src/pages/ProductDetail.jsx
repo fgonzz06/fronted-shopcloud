@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { getProductById, getCategories } from '../services/api';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { getProductById, getCategories, createPedido } from '../services/api';
 
 function ProductDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const [product, setProduct] = useState(null);
   const [categoriaNombre, setCategoriaNombre] = useState('');
   const [loading, setLoading] = useState(true);
+  const [adding, setAdding] = useState(false);
 
   useEffect(() => {
     const loadProduct = async () => {
@@ -26,6 +30,34 @@ function ProductDetail() {
     
     loadProduct();
   }, [id]);
+
+  const handleAddToCart = async () => {
+    if (!user) {
+      alert('Debes iniciar sesión para agregar productos al carrito');
+      navigate('/login');
+      return;
+    }
+
+    setAdding(true);
+    try {
+      const nuevoPedido = {
+        usuarioId: user.id,
+        items: [{ productoId: parseInt(id), cantidad: 1 }]
+      };
+      
+      console.log('Creando pedido desde ProductDetail:', nuevoPedido);
+      
+      const resultado = await createPedido(nuevoPedido);
+      
+      alert(`Producto agregado al carrito! Pedido #${resultado.id}`);
+      navigate('/pedidos'); // Redirige a la lista de pedidos
+    } catch (error) {
+      console.error('Error al agregar al carrito:', error);
+      alert('Error al agregar producto: ' + (error.response?.data?.message || error.message));
+    } finally {
+      setAdding(false);
+    }
+  };
 
   if (loading) return <div className="text-center py-10">Cargando producto...</div>;
   if (!product) return <div className="text-center py-10">Producto no encontrado</div>;
@@ -49,10 +81,11 @@ function ProductDetail() {
             Stock disponible: {product.stock} unidades
           </p>
           <button 
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition"
-            disabled={product.stock === 0}
+            onClick={handleAddToCart}
+            disabled={product.stock === 0 || adding}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition disabled:bg-gray-400"
           >
-            {product.stock > 0 ? 'Agregar al carrito' : 'Sin stock'}
+            {adding ? 'Agregando...' : (product.stock > 0 ? 'Agregar al carrito' : 'Sin stock')}
           </button>
         </div>
       </div>
