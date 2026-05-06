@@ -61,7 +61,6 @@ shopcloud-frontend/
 │   ├── main.jsx
 │   └── index.css
 ├── .env
-├── amplify.yml                      # Configuración de despliegue
 ├── package.json
 └── README.md
 ```
