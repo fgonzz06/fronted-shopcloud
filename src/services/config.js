@@ -1,14 +1,14 @@
 import axios from 'axios';
 
 // MODO MOCK (true = datos falsos, false = APIs reales)
-export const USE_MOCK = true;
+export const USE_MOCK = false;
 
 const BASE_IP = 'http://54.123.45.67'; // ip de ejemplo
 
 // Cada microservicio en un puerto diferente (como están en el docker-compose)
-export const MS1_URL = `${BASE_IP}:8001`;      // Productos
-export const MS2_URL = `${BASE_IP}:8000`;      // Pedidos
-export const MS3_URL = `${BASE_IP}:3000`;      // Usuarios
+export const MS1_URL = `http://32.195.7.187:8001`;      // Productos
+export const MS2_URL = `http://34.228.192.228:8002`;      // Pedidos
+export const MS3_URL = `http://52.71.14.24:8003`;      // Usuarios
 export const MS4_URL = `${BASE_IP}:8004`;      // Historial
 export const MS5_URL = `${BASE_IP}:8005`;      // Analytics
 
