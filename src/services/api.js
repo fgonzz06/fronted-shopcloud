@@ -49,13 +49,17 @@ export const getCategories = async (skip = 0, limit = 100) => {
 
 // ========== MS2 - Pedidos ==========
 
-// Listar pedidos de un usuario - usa /mis-pedidos o /usuario/{id}
-export const getPedidos = async (usuarioId) => {
+// Listar mis propios pedidos (usa el token automáticamente)
+export const getPedidos = async () => {
   if (USE_MOCK) return mockPedidos;
   
   try {
-    // Opción 1: usar /mis-pedidos (usa el token automáticamente)
+    console.log('=== getPedidos ===');
+    console.log('Token en localStorage:', localStorage.getItem('token'));
+    
     const res = await apiMs2.get('/pedidos/mis-pedidos');
+    
+    console.log('Pedidos recibidos:', res.data);
     return res.data;
   } catch (error) {
     console.error('Error fetching pedidos:', error);
@@ -89,6 +93,8 @@ export const createPedido = async (pedidoData) => {
         cantidad: item.cantidad
       }))
     };
+    console.log('Payload enviado a MS2:', payload);
+    
     const res = await apiMs2.post('/pedidos', payload);
     return res.data;
   } catch (error) {

@@ -10,17 +10,27 @@ function Pedidos() {
   const [productoId, setProductoId] = useState('');
   const [cantidad, setCantidad] = useState(1);
 
-  // Cargar pedidos al montar
+  // Cargar pedidos al montar - getPedidos NO necesita parámetro
   useEffect(() => {
     const loadPedidos = async () => {
       setLoading(true);
-      const data = await getPedidos(user?.id);
-      setPedidos(data);
+      
+      console.log('=== DEPURACIÓN ===');
+      console.log('Usuario logueado:', user);
+      console.log('ID del usuario:', user?.id);
+      
+      const data = await getPedidos(); // ← Sin parámetro!
+      
+      console.log('Pedidos recibidos:', data);
+      setPedidos(Array.isArray(data) ? data : []);
       setLoading(false);
     };
     
     if (user) {
       loadPedidos();
+    } else {
+      console.log('No hay usuario logueado');
+      setLoading(false);
     }
   }, [user]);
 
@@ -35,22 +45,25 @@ function Pedidos() {
     setCreating(true);
     try {
       const nuevoPedido = {
-        usuarioId: user?.id || '1',
+        usuarioId: user?.id, // Usa el ID real del token
         items: [{ productoId: parseInt(productoId), cantidad: parseInt(cantidad) }]
       };
+      
+      console.log('Creando pedido:', nuevoPedido);
       
       const resultado = await createPedido(nuevoPedido);
       alert(`Pedido creado con éxito! ID: ${resultado.id}`);
       
       // Recargar la lista de pedidos
-      const pedidosActualizados = await getPedidos(user?.id);
-      setPedidos(pedidosActualizados);
+      const pedidosActualizados = await getPedidos();
+      setPedidos(Array.isArray(pedidosActualizados) ? pedidosActualizados : []);
       
       // Limpiar formulario
       setProductoId('');
       setCantidad(1);
     } catch (error) {
-      alert('Error al crear pedido: ' + error.message);
+      console.error('Error:', error);
+      alert('Error al crear pedido: ' + (error.response?.data?.message || error.message));
     } finally {
       setCreating(false);
     }
@@ -95,14 +108,16 @@ function Pedidos() {
             {creating ? 'Creando...' : 'Agregar al carrito'}
           </button>
         </form>
-        <p className="text-xs text-gray-500 mt-2">
-          * Los pedidos cambian automáticamente de estado: PENDIENTE → ENVIADO (15s) → ENTREGADO (30s)
-        </p>
       </div>
 
       {/* Lista de pedidos */}
       {pedidos.length === 0 ? (
-        <p className="text-gray-500 text-center py-8">No tienes pedidos aún</p>
+        <div className="text-center py-8">
+          <p className="text-gray-500">No tienes pedidos aún</p>
+          <p className="text-gray-400 text-sm mt-2">
+            Crea un pedido usando el formulario de arriba
+          </p>
+        </div>
       ) : (
         <div className="space-y-4">
           {pedidos.map(pedido => (
@@ -111,7 +126,7 @@ function Pedidos() {
                 <div>
                   <h3 className="font-bold text-lg">Pedido #{pedido.id}</h3>
                   <p className="text-gray-600 text-sm">
-                    Fecha: {new Date(pedido.creadoEn).toLocaleString()}
+                    Fecha: {pedido.creadoEn ? new Date(pedido.creadoEn).toLocaleString() : 'Fecha no disponible'}
                   </p>
                   <p className="text-gray-600 text-sm">Usuario: {pedido.usuarioId}</p>
                 </div>
