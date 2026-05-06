@@ -84,27 +84,28 @@ shopcloud-frontend/
 ```bash
 git clone https://github.com/tu-usuario/shopcloud-frontend.git
 cd shopcloud-frontend
-
+```
 
 ## 2. Instalar dependencias
 
 ```bash
 npm install
+```
 
-3. Configurar variables de entorno
+## 3. Configurar variables de entorno
 
 Crea un archivo .env en la raíz:
 env
 
 VITE_API_GATEWAY_URL=https://tu-api-gateway-url.amazonaws.com
 
-4. Modo desarrollo (con datos mock)
+## 4. Modo desarrollo (con datos mock)
 bash
 
 npm run dev
 
 Abre http://localhost:5173
-5. Modo producción (con backends reales)
+## 5. Modo producción (con backends reales)
 
     En src/services/config.js, cambia:
     javascript
@@ -127,7 +128,7 @@ Abre http://localhost:5173
     npm run build
     npm run preview
 
-🔗 Microservicios Consumidos
+## 🔗 Microservicios Consumidos
 Microservicio	Tecnología	Endpoints utilizados
 MS1 - Productos	FastAPI + MySQL	GET /productos/, GET /productos/{id}, GET /categorias/
 MS2 - Pedidos	Spring Boot + PostgreSQL	GET /pedidos/mis-pedidos, POST /pedidos
@@ -142,7 +143,7 @@ Autenticación
 
     Refresh: Automático mediante interceptor de axios
 
-🌍 Variables de Entorno
+## 🌍 Variables de Entorno
 Variable	Descripción	Obligatoria
 VITE_API_GATEWAY_URL	URL del API Gateway o Load Balancer	✅ Para producción
 ☁️ Despliegue en AWS Amplify
@@ -162,7 +163,7 @@ frontend:
   cache:
     paths: [node_modules/**/*]
 
-Pasos para desplegar
+## Pasos para desplegar
 
     Sube el código a GitHub
 
@@ -176,8 +177,7 @@ Pasos para desplegar
 
     Haz clic en "Save and deploy"
 
-✨ Características
-Implementadas
+## ✨ Características Implementadas
 
     ✅ Autenticación JWT: Login, registro, logout y persistencia de sesión
 
@@ -195,23 +195,17 @@ Implementadas
 
     ✅ Arquitectura multientorno: Modo mock para desarrollo offline
 
-Próximas mejoras
+## ROL responsabilidad
 
-    ⏳ Carga de imágenes reales desde S3
-
-    ⏳ Implementación de WebSockets para estados de pedido en tiempo real
-
-    ⏳ Tests unitarios y e2e con Vitest + Playwright
-
-👥 Contribuidores
-Rol	Responsabilidad
-Frontend	Desarrollo completo de la SPA, integración con microservicios, despliegue en AWS Amplify
-Backend MS1	API de productos con FastAPI + MySQL
-Backend MS2	API de pedidos con Spring Boot + PostgreSQL
-Backend MS3	API de usuarios con Node.js + MongoDB
-Backend MS4	API de historial (consolidación)
-Backend MS5	API de analytics con Athena
-Infraestructura	VMs EC2, Load Balancer, API Gateway, Networking
+| Rol | Responsabilidad |
+|-----|-----------------|
+| Frontend | Desarrollo completo de la SPA, integración con microservicios, despliegue en AWS Amplify |
+| Backend MS1 | API de productos con FastAPI + MySQL |
+| Backend MS2 | API de pedidos con Spring Boot + PostgreSQL |
+| Backend MS3 | API de usuarios con Node.js + MongoDB |
+| Backend MS4 | API de historial (consolidación) |
+| Backend MS5 | API de analytics con Athena |
+| Infraestructura | VMs EC2, Load Balancer, API Gateway, Networking |
 📄 Licencia
 
 Este proyecto es parte del curso de Arquitectura de Software - Todos los derechos reservados.
