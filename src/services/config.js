@@ -3,14 +3,16 @@ import axios from 'axios';
 // MODO MOCK (true = datos falsos, false = APIs reales)
 export const USE_MOCK = false;
 
-const BASE_IP = 'http://54.123.45.67'; // ip de ejemplo
+// URL del Load Balancer (API Gateway)
+const LOAD_BALANCER_URL = 'https://j0v80gv9x5.execute-api.us-east-1.amazonaws.com';
 
-// Cada microservicio en un puerto diferente (como están en el docker-compose)
-export const MS1_URL = `http://32.195.7.187:8001`;      // Productos
-export const MS2_URL = `http://34.228.192.228:8002`;      // Pedidos
-export const MS3_URL = `http://52.71.14.24:8003`;      // Usuarios
-export const MS4_URL = `${BASE_IP}:8004`;      // Historial
-export const MS5_URL = `${BASE_IP}:8005`;      // Analytics
+// TODOS los microservicios usan la MISMA URL
+// El Load Balancer redirige según la ruta (path)
+export const MS1_URL = LOAD_BALANCER_URL;  // Productos (usa /productos/*)
+export const MS2_URL = LOAD_BALANCER_URL;  // Pedidos (usa /pedidos/*)
+export const MS3_URL = LOAD_BALANCER_URL;  // Usuarios (usa /usuarios/*)
+export const MS4_URL = LOAD_BALANCER_URL;  // Historial (usa /historial/*)
+export const MS5_URL = LOAD_BALANCER_URL;  // Analytics (usa /ventas-por-categoria/*, etc.)
 
 
 export const apiMs1 = axios.create({
