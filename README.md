@@ -41,28 +41,28 @@ Frontend del proyecto **ShopCloud**, un e-commerce distribuido basado en microse
 
 shopcloud-frontend/
 ├── src/
-│ ├── components/
-│ │ └── Navbar.jsx # Barra de navegación con autenticación
-│ ├── context/
-│ │ └── AuthContext.jsx # Contexto de autenticación (JWT)
-│ ├── pages/
-│ │ ├── Home.jsx # Lista de productos (MS1)
-│ │ ├── ProductDetail.jsx # Detalle de producto + carrito (MS1 + MS2)
-│ │ ├── Pedidos.jsx # Lista y creación de pedidos (MS2)
-│ │ ├── Perfil.jsx # Perfil de usuario (MS3)
-│ │ ├── Historial.jsx # Historial de compras (MS4)
-│ │ ├── Analytics.jsx # Estadísticas (MS5)
-│ │ ├── Login.jsx # Inicio de sesión
-│ │ └── Registro.jsx # Registro de usuarios
-│ ├── services/
-│ │ ├── config.js # Configuración de APIs y axios
-│ │ ├── api.js # Funciones de consumo de APIs
-│ │ └── mockData.js # Datos mock para desarrollo
-│ ├── App.jsx
-│ ├── main.jsx
-│ └── index.css
+│   ├── components/
+│   │   └── Navbar.jsx               # Barra de navegación con autenticación
+│   ├── context/
+│   │   └── AuthContext.jsx          # Contexto de autenticación (JWT)
+│   ├── pages/
+│   │   ├── Home.jsx                 # Lista de productos (MS1)
+│   │   ├── ProductDetail.jsx        # Detalle de producto + carrito (MS1 + MS2)
+│   │   ├── Pedidos.jsx              # Lista y creación de pedidos (MS2)
+│   │   ├── Perfil.jsx               # Perfil de usuario (MS3)
+│   │   ├── Historial.jsx            # Historial de compras (MS4)
+│   │   ├── Analytics.jsx            # Estadísticas (MS5)
+│   │   ├── Login.jsx                # Inicio de sesión
+│   │   └── Registro.jsx             # Registro de usuarios
+│   ├── services/
+│   │   ├── config.js                # Configuración de APIs y axios
+│   │   ├── api.js                   # Funciones de consumo de APIs
+│   │   └── mockData.js              # Datos mock para desarrollo
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
 ├── .env
-├── amplify.yml # Configuración de despliegue
+├── amplify.yml                      # Configuración de despliegue
 ├── package.json
 └── README.md
 
