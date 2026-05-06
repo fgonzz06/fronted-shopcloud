@@ -172,25 +172,76 @@ export const getResumenHistorial = async (usuarioId) => {
 
 // ========== MS5 - Analytics ==========
 export const getVentasPorCategoria = async () => {
-  if (USE_MOCK) return mockVentasPorCategoria;
-  const res = await apiMs5.get('/analytics/ventas-por-categoria');
-  return res.data;
+  if (USE_MOCK) return mockVentasCategoria;
+  try {
+    const res = await apiMs5.get('/analytics/ventas-por-categoria');
+    // El MS5 devuelve { status: "success", data: [["Electrónica", "45", "15420.5"], ...] }
+    if (res.data.status === 'success' && res.data.data) {
+      // Convertir el array de arrays a objetos
+      return res.data.data.map(row => ({
+        categoria: row[0],
+        total_items: parseInt(row[1]),
+        ingresos: parseFloat(row[2])
+      }));
+    }
+    return [];
+  } catch (error) {
+    console.error('Error fetching ventas por categoria:', error);
+    return [];
+  }
 };
 
 export const getTopProductos = async () => {
   if (USE_MOCK) return mockTopProductos;
-  const res = await apiMs5.get('/analytics/top-productos');
-  return res.data;
+  try {
+    const res = await apiMs5.get('/analytics/top-productos');
+    // Devuelve: [["Laptop Gaming", "45", "44955"], ...]
+    if (res.data.status === 'success' && res.data.data) {
+      return res.data.data.map(row => ({
+        nombre: row[0],
+        unidades_vendidas: parseInt(row[1]),
+        ingresos: parseFloat(row[2])
+      }));
+    }
+    return [];
+  } catch (error) {
+    console.error('Error fetching top productos:', error);
+    return [];
+  }
 };
 
 export const getUsuariosActivos = async () => {
   if (USE_MOCK) return mockUsuariosActivos;
-  const res = await apiMs5.get('/analytics/usuarios-activos');
-  return res.data;
+  try {
+    const res = await apiMs5.get('/analytics/usuarios-activos');
+    if (res.data.status === 'success' && res.data.data) {
+      return res.data.data.map(row => ({
+        nombre: row[0],
+        email: row[1],
+        numero_pedidos: parseInt(row[2]),
+        gasto_total: parseFloat(row[3])
+      }));
+    }
+    return [];
+  } catch (error) {
+    console.error('Error fetching usuarios activos:', error);
+    return [];
+  }
 };
 
 export const getIngresosPorMes = async () => {
   if (USE_MOCK) return mockIngresosPorMes;
-  const res = await apiMs5.get('/analytics/ingresos-por-mes');
-  return res.data;
+  try {
+    const res = await apiMs5.get('/analytics/ingresos-por-mes');
+    if (res.data.status === 'success' && res.data.data) {
+      return res.data.data.map(row => ({
+        mes: row[0],
+        ingresos: parseFloat(row[1])
+      }));
+    }
+    return [];
+  } catch (error) {
+    console.error('Error fetching ingresos por mes:', error);
+    return [];
+  }
 };
