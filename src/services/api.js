@@ -122,7 +122,7 @@ export const updatePedidoEstado = async (id, estado) => {
 export const getUsuario = async (id) => {
   if (USE_MOCK) return mockUsuario;
   try {
-    const res = await apiMs3.get(`/api/v1/usuarios/${id}`);
+    const res = await apiMs3.get(`/usuarios/${id}`);
     return res.data.data;
   } catch (error) {
     console.error(`Error fetching usuario ${id}:`, error);
@@ -133,7 +133,7 @@ export const getUsuario = async (id) => {
 export const updateUsuarioDireccion = async (id, direccion) => {
   if (USE_MOCK) return { success: true, mensaje: 'Dirección actualizada (mock)' };
   try {
-    const res = await apiMs3.put(`/api/v1/usuarios/${id}/direccion`, { direccion });
+    const res = await apiMs3.put(`/usuarios/${id}/direccion`, { direccion });
     return res.data.data;
   } catch (error) {
     console.error(`Error updating direccion for ${id}:`, error);
@@ -144,7 +144,7 @@ export const updateUsuarioDireccion = async (id, direccion) => {
 export const signup = async (userData) => {
   if (USE_MOCK) return { success: true, token: 'mock-token' };
   try {
-    const res = await apiMs3.post('/api/v1/usuarios/signup', userData);
+    const res = await apiMs3.post('/usuarios/signup', userData);
     return res.data;
   } catch (error) {
     console.error('Error signing up:', error);
@@ -155,7 +155,7 @@ export const signup = async (userData) => {
 export const loginUsuario = async (email, password) => {
   if (USE_MOCK) return { success: true, token: 'mock-token' };
   try {
-    const res = await apiMs3.post('/api/v1/usuarios/login', { email, password });
+    const res = await apiMs3.post('/usuarios/login', { email, password });
     return res.data;
   } catch (error) {
     console.error('Error logging in:', error);

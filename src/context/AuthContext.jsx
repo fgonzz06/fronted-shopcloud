@@ -13,7 +13,7 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     setLoading(true);
     try {
-      const res = await apiMs3.post('/api/v1/usuarios/login', { email, password });
+      const res = await apiMs3.post('/usuarios/login', { email, password });
       
       if (res.data.token) {
         localStorage.setItem('token', res.data.token);
@@ -45,7 +45,7 @@ export function AuthProvider({ children }) {
   const register = async (userData) => {
     setLoading(true);
     try {
-      const res = await apiMs3.post('/api/v1/usuarios/signup', userData);
+      const res = await apiMs3.post('/usuarios/signup', userData);
       
       if (res.data.token) {
         localStorage.setItem('token', res.data.token);
