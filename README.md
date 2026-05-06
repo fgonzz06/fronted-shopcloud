@@ -39,6 +39,7 @@ Frontend del proyecto **ShopCloud**, un e-commerce distribuido basado en microse
 
 ## 📁 Estructura del Proyecto
 
+```
 shopcloud-frontend/
 ├── src/
 │   ├── components/
@@ -51,9 +52,7 @@ shopcloud-frontend/
 │   │   ├── Pedidos.jsx              # Lista y creación de pedidos (MS2)
 │   │   ├── Perfil.jsx               # Perfil de usuario (MS3)
 │   │   ├── Historial.jsx            # Historial de compras (MS4)
-│   │   ├── Analytics.jsx            # Estadísticas (MS5)
-│   │   ├── Login.jsx                # Inicio de sesión
-│   │   └── Registro.jsx             # Registro de usuarios
+│   │   └── Analytics.jsx            # Estadísticas (MS5)
 │   ├── services/
 │   │   ├── config.js                # Configuración de APIs y axios
 │   │   ├── api.js                   # Funciones de consumo de APIs
@@ -65,6 +64,7 @@ shopcloud-frontend/
 ├── amplify.yml                      # Configuración de despliegue
 ├── package.json
 └── README.md
+```
 
 
 ---
