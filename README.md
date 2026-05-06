@@ -1,16 +1,40 @@
-# React + Vite
+# 🛒 ShopCloud - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![React](https://img.shields.io/badge/React-18.3-61DAFB?logo=react)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.0-646CFF?logo=vite)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-06B6D4?logo=tailwindcss)](https://tailwindcss.com/)
+[![AWS Amplify](https://img.shields.io/badge/AWS_Amplify-Deployed-FF9900?logo=amazonaws)](https://aws.amazon.com/amplify/)
 
-Currently, two official plugins are available:
+Frontend del proyecto **ShopCloud**, un e-commerce distribuido basado en microservicios. Esta aplicación consume 5 microservicios independientes (Productos, Pedidos, Usuarios, Historial y Analytics) desplegados en AWS.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 📋 Tabla de Contenidos
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- [Tecnologías](#-tecnologías)
+- [Estructura del Proyecto](#-estructura-del-proyecto)
+- [Requisitos Previos](#-requisitos-previos)
+- [Instalación y Ejecución](#-instalación-y-ejecución)
+- [Microservicios Consumidos](#-microservicios-consumidos)
+- [Variables de Entorno](#-variables-de-entorno)
+- [Despliegue en AWS Amplify](#-despliegue-en-aws-amplify)
+- [Características](#-características)
+- [Contribuidores](#-contribuidores)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Tecnologías
+
+| Tecnología | Versión | Propósito |
+|------------|---------|-----------|
+| React | 18.3.1 | Biblioteca principal |
+| Vite | 5.0.0 | Build tool y dev server |
+| Tailwind CSS | 4.0.0 | Estilos y diseño |
+| React Router DOM | 6.22.0 | Navegación entre páginas |
+| Axios | 1.6.5 | Cliente HTTP |
+| JWT Decode | 4.0.0 | Decodificación de tokens |
+| AWS Amplify | - | Despliegue continuo |
+
+---
+
+## 📁 Estructura del Proyecto
