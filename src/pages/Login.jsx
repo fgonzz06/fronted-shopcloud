@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -15,7 +15,7 @@ function Login() {
     
     const result = await login(email, password);
     if (result.success) {
-      navigate('/');  // Redirige al home
+      navigate('/');
     } else {
       setError(result.error || 'Error al iniciar sesión');
     }
@@ -65,7 +65,10 @@ function Login() {
         </form>
 
         <p className="text-center text-gray-500 text-sm mt-4">
-          Demo: cualquier email/contraseña funciona
+          ¿No tienes cuenta?{' '}
+          <Link to="/registro" className="text-blue-600 hover:underline">
+            Regístrate aquí
+          </Link>
         </p>
       </div>
     </div>

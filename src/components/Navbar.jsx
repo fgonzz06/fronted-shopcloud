@@ -34,9 +34,15 @@ function Navbar() {
               </button>
             </>
           ) : (
-            <Link to="/login" className="bg-blue-600 px-3 py-1 rounded hover:bg-blue-700">
-              Iniciar Sesión
-            </Link>
+            <>
+              <Link to="/login" className="bg-blue-600 px-3 py-1 rounded hover:bg-blue-700">
+                Iniciar Sesión
+              </Link>
+              <Link to="/registro" className="bg-green-600 px-3 py-1 rounded hover:bg-green-700">
+                Registrarse
+              </Link>
+            </>
+            
           )}
         </div>
       </div>

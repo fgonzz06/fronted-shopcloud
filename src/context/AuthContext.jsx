@@ -28,24 +28,24 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const registro = async (userData) => {
-    setLoading(true);
-    try {
-      const res = await apiMs3.post('/api/v1/usuarios/signup', userData);
-      
-      if (res.data.token) {
-        localStorage.setItem('token', res.data.token);
-        setUser(res.data.data?.usuario);
-        return { success: true };
-      }
-      return { success: false, error: 'No se recibió token' };
-    } catch (error) {
-      const mensaje = error.response?.data?.message || 'Error al registrar usuario';
-      return { success: false, error: mensaje };
-    } finally {
-      setLoading(false);
+  const register = async (userData) => {
+  setLoading(true);
+  try {
+    const res = await apiMs3.post('/api/v1/usuarios/signup', userData);
+    
+    if (res.data.token) {
+      localStorage.setItem('token', res.data.token);
+      setUser(res.data.data?.usuario);
+      return { success: true };
     }
-  };
+    return { success: false, error: 'No se recibió token' };
+  } catch (error) {
+    const mensaje = error.response?.data?.message || 'Error al registrar usuario';
+    return { success: false, error: mensaje };
+  } finally {
+    setLoading(false);
+  }
+}
 
   const logout = () => {
     setUser(null);
@@ -67,7 +67,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, registro, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
